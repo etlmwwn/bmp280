@@ -122,6 +122,11 @@ else
     echo "Environment monitoring service is not active. Please check the service."
 fi
 
+# Sleep for 30 seconds to allow data collection
+echo "Step 21: Waiting for 30 seconds to allow data collection..."
+sleep 30
+echo "Wait completed."
+
 # Query the latest measurements and print to screen
 echo "Step 21: Querying latest measurements from InfluxDB..."
 LATEST_MEASUREMENTS=$(influx -database 'environment' -execute 'SELECT * FROM "measurement_name" ORDER BY time DESC LIMIT 1' -format 'csv')
