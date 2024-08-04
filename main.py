@@ -6,7 +6,7 @@ import busio
 import adafruit_bmp280
 
 # InfluxDB settings
-INFLUXDB_HOST = '192.168.137.143'
+INFLUXDB_HOST = '0.0.0.0'
 INFLUXDB_PORT = 8086
 INFLUXDB_DB = 'environment'
 
