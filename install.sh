@@ -129,4 +129,3 @@ echo "Latest measurements:"
 echo "$LATEST_MEASUREMENTS"
 
 echo "Installation process completed."
-
