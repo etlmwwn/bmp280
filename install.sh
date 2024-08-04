@@ -81,7 +81,7 @@ Description=Environment
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /home/matthew/bmp280/main.py
+ExecStart=/usr/bin/python3 /home/matthew/bmp280/main_influx_v2_standalone.py
 WorkingDirectory=/home/matthew/bmp280
 StandardOutput=inherit
 StandardError=inherit
@@ -99,7 +99,7 @@ echo "Systemd service file created."
 # Download the monitoring script
 echo "Step 16: Downloading environment monitoring script..."
 mkdir -p /home/matthew/bmp280
-curl -o /home/matthew/bmp280/main.py https://raw.githubusercontent.com/etlmwwn/bmp280_environment_monitor/main/main_influx_v2_standalone.py
+curl -o /home/matthew/bmp280/main.py https://raw.githubusercontent.com/etlmwwn/bmp280/main/main_influx_v2_standalone.py
 echo "Environment monitoring script downloaded."
 
 # Enable and start the environment monitoring service
