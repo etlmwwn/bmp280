@@ -96,7 +96,7 @@ echo "Systemd service file created."
 # Download the monitoring script
 echo "Step 16: Downloading environment monitoring script..."
 mkdir -p /home/matthew/bmp280
-curl -o /home/matthew/bmp280/main.py https://raw.githubusercontent.com/etlmwwn/bmp280_environment_monitor/main/main_influx_v2_standalone.py
+curl -o /home/matthew/bmp280/main.py https://raw.githubusercontent.com/etlmwwn/bmp280/main/main.py
 echo "Environment monitoring script downloaded."
 
 # Enable and start the environment monitoring service
@@ -115,5 +115,11 @@ echo "Environment monitoring service started."
 echo "Step 20: Checking environment monitoring service status..."
 sudo systemctl status environment.service
 echo "Environment monitoring service status checked."
+
+# Query the latest measurements and print to screen
+echo "Step 21: Querying latest measurements from InfluxDB..."
+LATEST_MEASUREMENTS=$(influx -database 'environment' -execute 'SELECT * FROM "measurement_name" ORDER BY time DESC LIMIT 1' -format 'csv')
+echo "Latest measurements:"
+echo "$LATEST_MEASUREMENTS"
 
 echo "Installation process completed."
