@@ -55,71 +55,10 @@ sudo systemctl start influxdb
 echo "InfluxDB service started."
 
 echo "Step 12: Checking InfluxDB service status..."
-sudo systemctl status influxdb
-echo "InfluxDB service status checked."
+if sudo systemctl is-active --quiet influxdb; then
+    echo "InfluxDB is active."
+else
+    echo "InfluxDB is not active. Please check the service."
+fi
 
-# Create InfluxDB database
-echo "Step 13: Creating InfluxDB database 'environment'..."
-influx -execute "CREATE DATABASE environment"
-echo "InfluxDB database 'environment' created."
-
-# Install Python InfluxDB client
-echo "Step 14: Installing Python InfluxDB client..."
-sudo /usr/bin/python3 -m pip install influxdb
-echo "Python InfluxDB client installed."
-
-# Create systemd service for the environment monitoring script
-SERVICE_FILE="/etc/systemd/system/environment.service"
-echo "Step 15: Creating systemd service file for environment monitoring..."
-
-sudo bash -c "cat > $SERVICE_FILE" << 'EOF'
-[Unit]
-Description=Environment
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/python3 /home/matthew/bmp280/main.py
-WorkingDirectory=/home/matthew/bmp280
-StandardOutput=inherit
-StandardError=inherit
-Restart=always
-User=root
-Group=root
-AmbientCapabilities=CAP_NET_RAW
-
-[Install]
-WantedBy=default.target
-EOF
-
-echo "Systemd service file created."
-
-# Download the monitoring script
-echo "Step 16: Downloading environment monitoring script..."
-mkdir -p /home/matthew/bmp280
-curl -o /home/matthew/bmp280/main.py https://raw.githubusercontent.com/etlmwwn/bmp280/main/main.py
-echo "Environment monitoring script downloaded."
-
-# Enable and start the environment monitoring service
-echo "Step 17: Reloading systemd daemon..."
-sudo systemctl daemon-reload
-echo "Systemd daemon reloaded."
-
-echo "Step 18: Enabling environment monitoring service..."
-sudo systemctl enable environment.service
-echo "Environment monitoring service enabled."
-
-echo "Step 19: Starting environment monitoring service..."
-sudo systemctl start environment.service
-echo "Environment monitoring service started."
-
-echo "Step 20: Checking environment monitoring service status..."
-sudo systemctl status environment.service
-echo "Environment monitoring service status checked."
-
-# Query the latest measurements and print to screen
-echo "Step 21: Querying latest measurements from InfluxDB..."
-LATEST_MEASUREMENTS=$(influx -database 'environment' -execute 'SELECT * FROM "measurement_name" ORDER BY time DESC LIMIT 1' -format 'csv')
-echo "Latest measurements:"
-echo "$LATEST_MEASUREMENTS"
-
-echo "Installation process completed."
+# Create
