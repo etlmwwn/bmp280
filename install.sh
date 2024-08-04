@@ -48,6 +48,11 @@ echo "Step 10: Installing InfluxDB..."
 sudo apt-get install -y influxdb
 echo "InfluxDB installed."
 
+# Update InfluxDB bind address to 0.0.0.0
+echo "Step 11: Configuring InfluxDB to listen on all network interfaces..."
+sudo sed -i 's/^#\?bind-address = .*/bind-address = "0.0.0.0:8086"/' /etc/influxdb/influxdb.conf
+echo "InfluxDB configuration updated."
+
 echo "Step 11: Unmasking, enabling, and starting InfluxDB service..."
 sudo systemctl unmask influxdb
 sudo systemctl enable influxdb
