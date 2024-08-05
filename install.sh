@@ -169,8 +169,29 @@ echo "Step 24.7: Starting Grafana server..."
 sudo /bin/systemctl start grafana-server
 echo "Grafana server started."
 
+# Wait for Grafana to be fully up and running
+echo "Step 25: Waiting for Grafana to be fully up and running..."
+until $(curl --output /dev/null --silent --head --fail http://localhost:3000); do
+    printf '.'
+    sleep 5
+done
+echo "Grafana is up and running."
+
+GRAFANA_DASHBOARD_URL="https://raw.githubusercontent.com/etlmwwn/bmp280/main/grafana_dashboard.json"
+
+# Import Grafana dashboard
+echo "Step 26: Importing Grafana dashboard..."
+DASHBOARD_JSON=$(curl -s $GRAFANA_DASHBOARD_URL)
+
+curl -X POST -H "Content-Type: application/json" -d "$DASHBOARD_JSON" \
+    http://admin:admin@localhost:3000/api/dashboards/db
+
+echo "Grafana dashboard imported."
+
+echo "Installation process completed."
+
+
 echo "Installation process completed."
 
 
 
-echo "Installation process completed."
