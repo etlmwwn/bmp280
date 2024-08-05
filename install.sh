@@ -86,7 +86,7 @@ Description=Environment
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /home/matthew/bmp280/main_influx_v2_standalone.py
+ExecStart=/usr/bin/python3 /home/matthew/bmp280/main.py
 WorkingDirectory=/home/matthew/bmp280
 StandardOutput=inherit
 StandardError=inherit
