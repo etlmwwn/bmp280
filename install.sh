@@ -86,8 +86,8 @@ Description=Environment
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /home/matthew/bmp280/main.py
-WorkingDirectory=/home/matthew/bmp280
+ExecStart=/usr/bin/python3 /home/bmp280/main.py
+WorkingDirectory=/home/bmp280
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
@@ -103,8 +103,8 @@ echo "Systemd service file created."
 
 # Download the monitoring script
 echo "Step 16: Downloading environment monitoring script..."
-mkdir -p /home/matthew/bmp280
-curl -o /home/matthew/bmp280/main.py https://raw.githubusercontent.com/etlmwwn/bmp280/main/main.py
+mkdir -p /home/bmp280
+curl -o /home/bmp280/main.py https://raw.githubusercontent.com/etlmwwn/bmp280/main/main.py
 echo "Environment monitoring script downloaded."
 
 # Enable and start the environment monitoring service
