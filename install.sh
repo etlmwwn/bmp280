@@ -138,4 +138,39 @@ LATEST_MEASUREMENTS=$(influx -database 'environment' -execute 'SELECT * FROM "me
 echo "Latest measurements:"
 echo "$LATEST_MEASUREMENTS"
 
+# Install and configure Grafana
+echo "Step 24: Installing Grafana..."
+
+echo "Step 24.1: Creating necessary directories..."
+sudo mkdir -p /etc/apt/keyrings/
+echo "Directories created."
+
+echo "Step 24.2: Adding Grafana GPG key..."
+wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
+echo "Grafana GPG key added."
+
+echo "Step 24.3: Adding Grafana repository..."
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
+echo "Grafana repository added."
+
+echo "Step 24.4: Updating package list for Grafana..."
+sudo apt-get update
+echo "Package list for Grafana updated."
+
+echo "Step 24.5: Installing Grafana..."
+sudo apt-get install -y grafana
+echo "Grafana installed."
+
+echo "Step 24.6: Enabling Grafana server..."
+sudo /bin/systemctl enable grafana-server
+echo "Grafana server enabled."
+
+echo "Step 24.7: Starting Grafana server..."
+sudo /bin/systemctl start grafana-server
+echo "Grafana server started."
+
+echo "Installation process completed."
+
+
+
 echo "Installation process completed."
