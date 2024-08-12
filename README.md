@@ -1,4 +1,4 @@
-# Raspberry Pi Environment Monitoring Setup
+# Raspberry Pi & BMP280 Environment Monitoring Setup
 
 This repository contains a script to set up an environment monitoring system on a Raspberry Pi running Debian Bullseye. The setup includes configuring I2C, installing necessary packages, setting up InfluxDB and Grafana, and configuring a systemd service to monitor and log environmental data.
 
